@@ -1,0 +1,36 @@
+{
+  "name": "middleware-csi",
+  "version": "1.0.0",
+  "description": "Proyect class of construcción de sistemas de información",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "clear && nodemon index.js",
+    "dev:w": "cls && nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CarlosOrtiz/middleware-csi.git"
+  },
+  "keywords": [],
+  "author": "Carlos&Luisa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CarlosOrtiz/middleware-csi/issues"
+  },
+  "homepage": "https://github.com/CarlosOrtiz/middleware-csi#readme",
+  "dependencies": {
+    "axios": "^0.21.4",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "fast-xml-parser": "^3.20.0",
+    "he": "^1.2.0",
+    "moment": "^2.29.1",
+    "node-cron": "^3.0.0",
+    "shopify-api-node": "^3.7.2",
+    "soap": "^0.42.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
