@@ -7,11 +7,11 @@ const { getProductsSiesa } = require('../../modules/erp/products')
 const { createProducts } = require('../../modules/middleware/syncProducts')
 const { addVariantProducts } = require('../../modules/middleware/syncVariants')
 const { deleteVariantProducts } = require('../../modules/middleware/deleteVariants')
+const { syncStock } = require('../../modules/middleware/updateStock')
 
 router.get('/get/all/products', async (req, res) => {
   const { count, productsSiesa, responseStock, responseItems } = await getProductsSiesa();
   return res.send({ count, productsSiesa })
-
 });
 
 router.get('/sync/product', async (req, res) => {
@@ -34,6 +34,15 @@ router.get('/add/variants', async (req, res) => {
 
 router.get('/delete/variants', async (req, res) => {
   const response = await deleteVariantProducts()
+
+  if (response.error)
+    return res.send(response)
+
+  return res.send(response)
+});
+
+router.get('/update/inventory', async (req, res) => {
+  const response = await syncStock()
 
   if (response.error)
     return res.send(response)
