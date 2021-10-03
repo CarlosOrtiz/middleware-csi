@@ -61,28 +61,9 @@ router.get('/update/product', async (req, res) => {
 });
 
 //All Cron Job
-//The *inventory update* cron job runs every day at 4:00 a.m
-cron.schedule('0 4 * * *', async () => {
-  const response = await syncStock()
 
-  if (response.error)
-    return res.send(response)
-
-  return res.send(response)
-})
-
-//The *product update* cron job runs every day at 4:30 a.m.
-cron.schedule('30 4 * * *', async () => {
-  const { result } = await updateProducts()
-
-  if (result.error)
-    return res.send(result)
-
-  return res.send(result)
-})
-
-//The *create new product* cron job runs every day at 5:00 a.m
-cron.schedule('0 5 * * *', async () => {
+//The *create new product* cron job runs every day at 2:00 a.m
+cron.schedule('0 2 * * *', async () => {
   const response = await createProducts()
 
   if (response.error)
@@ -91,8 +72,8 @@ cron.schedule('0 5 * * *', async () => {
   return res.send(response)
 })
 
-//The *create new product* cron job runs every day at 5:00 a.m
-cron.schedule('0 5 * * *', async () => {
+//The *create new product* cron job runs every day at 2:30 a.m
+cron.schedule('30 2 * * *', async () => {
   const response = await addVariantProducts()
 
   if (response.error)
@@ -100,6 +81,37 @@ cron.schedule('0 5 * * *', async () => {
 
   return res.send(response)
 })
+
+//The *create new product* cron job runs every day at 3:10 a.m
+cron.schedule('10 3 * * *', async () => {
+  const response = await deleteVariantProducts()
+
+  if (response.error)
+    return res.send(response)
+
+  return res.send(response)
+});
+
+//The *inventory update* cron job runs every day at 3:20 a.m 3:20 pm 10:20 pm
+cron.schedule('20 3,15,20 * * *', async () => {
+  const response = await syncStock()
+
+  if (response.error)
+    return res.send(response)
+
+  return res.send(response)
+})
+
+//The *product update* cron job runs every day at 5:00 a.m. Y 5 PM
+cron.schedule('0 5,17 * * *', async () => {
+  const { result } = await updateProducts()
+
+  if (result.error)
+    return res.send(result)
+
+  return res.send(result)
+})
+
 
 
 module.exports = router;
