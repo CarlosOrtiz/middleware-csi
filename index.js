@@ -4,7 +4,7 @@ const app = express()
 const router = express.Router()
 require('dotenv').config({ path: '.env' })
 
-app.set('port', (process.env.APP_PORT || 8080))
+app.set('port', (process.env.PORT || 5500))
 app.use(express.urlencoded({ extended: false }))
 app.use(router)
 
