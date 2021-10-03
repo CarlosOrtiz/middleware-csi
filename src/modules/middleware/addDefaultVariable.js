@@ -1,4 +1,5 @@
 'use strict'
+const { saveError } = require('../data/audit');
 const { shopifyGetAllProduts, addDefaulVar } = require('../shopify/product')
 
 class addDefaultVariant {
@@ -15,6 +16,10 @@ class addDefaultVariant {
       })
     }
 
+    const detail = '¡No se logro realizar el proceso debidamente, porque los productos ya ha sido registrado!'
+    console.log(`error: 'PRODUCT_REGISTERED', detail:'¡No se logro realizar el proceso debidamente, porque los productos ya ha sido registrado!'`)
+
+    await saveError('PRODUCT_REGISTERED', detail, 'ADD_PRODUCT_REGISTERTS');
     return await addVariant(response);
   }
 }
