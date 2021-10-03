@@ -1,4 +1,5 @@
 'use strict'
+const { saveError } = require('../data/audit')
 const { getProductsSiesa } = require('../erp/products')
 const { shopifyGetAllProduts, shopifyGetInventory, shopifyRegisterInventory } = require('../shopify/product')
 
@@ -74,6 +75,7 @@ class UpdateStock {
       }
     } catch (error) {
       console.log(error)
+      await saveError('INVERTORY_NOT_FOUND', error, 'UPDATE_STOCK');
       return { error: 'NOT_UPDATED_STOCK', detail: error }
     }
   }

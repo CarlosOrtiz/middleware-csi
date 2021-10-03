@@ -1,6 +1,7 @@
 'use strict'
 const log = console.log
 require('dotenv').config()
+const { saveError } = require('../data/audit')
 const { getProductsSiesa } = require('../erp/products')
 const { addNewVariant, shopifyDeleteProduct, shopifyGetAllProduts } = require('../shopify/product')
 
@@ -88,6 +89,7 @@ const createNewVariants = async (variants, variantsCreated = []) => {
       variantsCreated.push(data.variant);
       return createNewVariants(variants, variantsCreated);
     } catch (error) {
+      await saveError('VARIANT_NOT_FOUND', error, 'SYNC_VARIANT');
       return createNewVariants(variants, variantsCreated);
     }
   }
@@ -105,6 +107,7 @@ const deleteProducts = async (products, response = []) => {
       response.push(nextProduct.id);
       return deleteProducts(products, response);
     } catch (error) {
+      await saveError('PRODUCT_NOT_FOUND', error, 'SYNC_VARIANT_DELETE_PRODUCTS');
       return deleteProducts(products, response);
     }
   }

@@ -16,10 +16,6 @@ class addDefaultVariant {
       })
     }
 
-    const detail = '¡No se logro realizar el proceso debidamente, porque los productos ya ha sido registrado!'
-    console.log(`error: 'PRODUCT_REGISTERED', detail:'¡No se logro realizar el proceso debidamente, porque los productos ya ha sido registrado!'`)
-
-    await saveError('PRODUCT_REGISTERED', detail, 'ADD_PRODUCT_REGISTERTS');
     return await addVariant(response);
   }
 }
@@ -34,6 +30,7 @@ const addVariant = async (variant, variantCreated = []) => {
       variantCreated.push(data.product);
       return addVariant(variant, variantCreated);
     } catch (error) {
+      await saveError('VARIANT_NOT_EXIST', error, 'ADD_DEFAULT_VARIABLE');
       return addVariant(variant, variantCreated);
     }
   }

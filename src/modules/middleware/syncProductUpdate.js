@@ -3,6 +3,7 @@ const log = console.log
 require('dotenv').config({ path: '.env' })
 const { shopifyGetAllProduts, shopifyUpdateProduct, shopifyUpdateVariant } = require('../shopify/product')
 const { getProductsSiesa, searchProductsSiesa } = require('../erp/products')
+const { saveError } = require('../data/audit')
 
 class SyncProductUpdate {
   static async updateProducts() {
@@ -117,6 +118,7 @@ class SyncProductUpdate {
         responseVarinatUpdate
       }
     } catch (error) {
+      await saveError('SKU_NOT_FOUND', error, 'SYNC_PRODUCT_UPDATE');
       return error
     }
   }
@@ -131,6 +133,7 @@ const updateVariant = async (variants, variantsUpdated = []) => {
       variantsUpdated.push(data);
       return updateVariant(variants, variantsUpdated);
     } catch (error) {
+      await saveError('VARIANT_NOT_FOUND', error, 'SYNC_PRODUCT_UPDATE-VARIANT');
       return updateVariant(variants, variantsUpdated);
     }
   }
@@ -148,6 +151,7 @@ const updateProduct = async (products, productsUpdated = []) => {
       productsUpdated.push(data.product);
       return updateProduct(products, productsUpdated);
     } catch (error) {
+      await saveError('PRODUCT_NOT_FOUND', error, 'SYNC_PRODUCT_UPDATE-PRODUCT');
       return updateProduct(products, productsUpdated);
     }
   }

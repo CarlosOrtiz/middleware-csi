@@ -1,6 +1,7 @@
 'use strict'
 const log = console.log
 require('dotenv').config()
+const { saveError } = require('../data/audit')
 const { shopifyDeleteVariant, shopifyGetAllProduts } = require('../shopify/product')
 
 class SyncDeleteVariants {
@@ -40,6 +41,7 @@ const deleteVariants = async (products, response = []) => {
       response.push(nextProduct.id);
       return deleteVariants(products, response);
     } catch (error) {
+      await saveError('VARIANT_NOT_ADDED', error, 'DELETE_VARIANTS');
       return deleteVariants(products, response);
     }
   }

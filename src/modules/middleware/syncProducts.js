@@ -1,5 +1,6 @@
 'use strict'
 const log = console.log
+const { saveError } = require('../data/audit')
 const { getProductsSiesa } = require('../erp/products')
 const { createSmartCollections } = require('../shopify/collection')
 const { shopifyCreateProduct, shopifyGetAllProduts } = require('../shopify/product')
@@ -80,6 +81,7 @@ const createProducts = async (products, productsCreated = []) => {
       productsCreated.push(data.product);
       return createProducts(products, productsCreated);
     } catch (error) {
+      await saveError('SKU_NOT_FOUND', error, 'SYNC_PRODUCTS');
       return createProducts(products, productsCreated);
     }
   }
